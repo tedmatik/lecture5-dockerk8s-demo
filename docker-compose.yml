@@ -43,6 +43,22 @@ services:
     restart: unless-stopped
 
   # ----------------------------------------------------------
+  # DATABASE MANAGEMENT UI (Adminer)
+  # ----------------------------------------------------------
+  dbui:
+    image: adminer:latest
+    container_name: lecture5-dbui
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  # ----------------------------------------------------------
   # DATABASE (PostgreSQL)
   # ----------------------------------------------------------
   db:
